@@ -3,7 +3,7 @@ const alphaBasePath = "https://www.alphavantage.co/query";
 const twelveDataPrefix = "https://api.twelvedata.com";
 export const getAllStocks = async () => {
   const url = `${basePath}/stock/symbol?exchange=US&mic=XNYS&securityType=Common%20Stock&token=${
-    import.meta.env.VITE_API_KEY
+    import.meta.env.VITE_FINNHUB
   }`;
   const response = await fetch(url);
 
@@ -17,7 +17,7 @@ export const getAllStocks = async () => {
 
 export const getQuote = async (symbol: string | undefined) => {
   const url = `${basePath}/quote?symbol=${symbol}&token=${
-    import.meta.env.VITE_API_KEY
+    import.meta.env.VITE_FINNHUB
   }`;
   const response = await fetch(url);
 
@@ -66,7 +66,7 @@ export const fetchHistoricalData = async (
 
 export const getPeers = async (symbol: string | undefined) => {
   const url = `${basePath}/stock/peers?symbol=${symbol}&token=${
-    import.meta.env.VITE_API_KEY
+    import.meta.env.VITE_FINNHUB
   }`;
 
   const response = await fetch(url);
@@ -80,7 +80,7 @@ export const getPeers = async (symbol: string | undefined) => {
 
 export const getNews = async () => {
   const url = `${basePath}/news?category=general&token=${
-    import.meta.env.VITE_API_KEY
+    import.meta.env.VITE_FINNHUB
   }`;
   const response = await fetch(url);
 

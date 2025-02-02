@@ -1,3 +1,10 @@
+import {
+  ChartKey,
+  formattedTimeseriesValueType,
+  timeseriesApiResponseType,
+  timeseriesValueType,
+} from "./contracts";
+
 export function timeAgo(timestamp: number) {
   const now = Date.now() / 1000; // current time in seconds
   let diff = now - timestamp;
@@ -95,7 +102,7 @@ export const createDate = (
 //     .reverse(); // Reverse the order to show the earliest date first
 // };
 
-export const mapFilterToInterval = (filter: string): string => {
+export const mapFilterToInterval = (filter: ChartKey): string => {
   const filterMap: Record<string, string> = {
     "1H": "1h",
     "1D": "1day",
@@ -106,7 +113,7 @@ export const mapFilterToInterval = (filter: string): string => {
   return filterMap[filter] || filter; // Returns the mapped value or the original if not found
 };
 
-export const formatDatetime = (datetime, interval) => {
+export const formatDatetime = (datetime: string, interval: string) => {
   switch (interval) {
     case "1h":
       return datetime.split(" ")[1]; // ✅ Extracts "HH:MM" from "YYYY-MM-DD HH:MM:SS"
@@ -123,7 +130,7 @@ export const formatDatetime = (datetime, interval) => {
   }
 };
 
-export const getLatestDateData = (data) => {
+export const formatFor1H = (data: timeseriesApiResponseType) => {
   // if (!data || !data.length) return [];
 
   // Extract only the date part (ignoring time) from each datetime
@@ -132,29 +139,45 @@ export const getLatestDateData = (data) => {
   ];
 
   // Find the most recent date
-  const latestDate = uniqueDates.sort((a, b) => new Date(b) - new Date(a))[0];
+  const latestDate = uniqueDates.sort(
+    (a, b) => new Date(b).getTime() - new Date(a).getTime()
+  )[0];
 
   // Filter only the data that matches the latest date
   return data.values.filter((item) => item.datetime.startsWith(latestDate));
 };
 
-export const formatStockData = (apiResponse, interval) => {
+export const formatFor1D = (data: timeseriesApiResponseType) => {
+  if (!data || !data.values) {
+    console.error("Invalid API response", data);
+    return [];
+  }
+
+  return data.values
+    .slice(0, 30) // ✅ Take only the last 30 days
+    .map((item: timeseriesValueType) => ({
+      datetime: item.datetime, // X-Axis (Date)
+      high: Math.round(parseFloat(item.high)),
+      low: Math.round(parseFloat(item.low)),
+      close: Math.round(parseFloat(item.close)), // Y-Axis (Closing price)
+    }));
+};
+export const formatStockData = (
+  apiResponse: timeseriesValueType[],
+  interval: ChartKey
+): formattedTimeseriesValueType[] => {
   if (!apiResponse || !apiResponse.values) {
     console.error("Invalid API response", apiResponse);
     return [];
   }
 
-  const xy = apiResponse.map((item) =>
-    console.log("uu", interval, formatDatetime(item.datetime, interval))
-  );
-
   return apiResponse
-    .map((item) => ({
+    .map((item: timeseriesValueType) => ({
       datetime: formatDatetime(item.datetime, interval), // Use correct formatting per interval
       open: Math.round(parseFloat(item.open)), // Round values for readability
       high: Math.round(parseFloat(item.high)),
       low: Math.round(parseFloat(item.low)),
-      close: Math.round(parseFloat(item.close)),
+      close: parseFloat(item.close).toFixed(2),
       volume: parseInt(item.volume, 10),
     }))
     .reverse(); // Reverse order for chronological display

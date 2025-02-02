@@ -12,7 +12,7 @@ import { chartConfig } from "../constants/config";
 import ChartFilter from "./ChartFilter";
 import { useState } from "react";
 import { FilterContext } from "../Context/FilterContext";
-type ChartKey = "1H" | "1D" | "1W" | "1M";
+import { ChartKey } from "../constants/contracts";
 
 const StockPage = () => {
   const [filter, setFilter] = useState<ChartKey>("1W");

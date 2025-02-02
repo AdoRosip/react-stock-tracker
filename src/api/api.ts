@@ -1,6 +1,6 @@
 const basePath = "https://finnhub.io/api/v1";
 const alphaBasePath = "https://www.alphavantage.co/query";
-const twelveDataPrefix = "https://api.twelvedata.com";
+// const twelveDataPrefix = "https://api.twelvedata.com";
 export const getAllStocks = async () => {
   const url = `${basePath}/stock/symbol?exchange=US&mic=XNYS&securityType=Common%20Stock&token=${
     import.meta.env.VITE_FINNHUB
@@ -45,9 +45,7 @@ export const getCompanyOverview = async (symbol: string | undefined) => {
 
 export const fetchHistoricalData = async (
   stockSymbol: string | undefined,
-  interval: string | number,
-  from?: number,
-  to?: number
+  interval: string | number
 ) => {
   const url = `https://api.twelvedata.com/time_series?symbol=${stockSymbol}&interval=${interval}&apikey=${
     import.meta.env.VITE_TWELVE_DATA_API_KEY

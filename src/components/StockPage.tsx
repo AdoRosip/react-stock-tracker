@@ -8,7 +8,6 @@ import Chart from "./Chart";
 import KeyStats from "./KeyStats";
 import Indexes from "./Indexes";
 import Ticker from "./Ticker";
-import { chartConfig } from "../constants/config";
 import ChartFilter from "./ChartFilter";
 import { useState } from "react";
 import { FilterContext } from "../Context/FilterContext";

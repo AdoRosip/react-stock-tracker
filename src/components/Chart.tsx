@@ -68,9 +68,9 @@ const Chart: React.FC = () => {
         {/* MM-DD */}
         <YAxis
           domain={[
-            (dataMin: number) =>
+            () =>
               Math.floor(Math.min(...(data || []).map((d) => d.low)) * 0.99),
-            (dataMax: number) =>
+            () =>
               Math.ceil(Math.max(...(data || []).map((d) => d.high)) * 1.01),
           ]}
           tickFormatter={(tick) => Math.round(tick).toString()} // ✅ Rounds tick values

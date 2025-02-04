@@ -31,7 +31,6 @@ const Chart: React.FC = () => {
           id,
           mapFilterToInterval(filter)
         );
-        console.log(result);
 
         const latestDates =
           filter === "1H"
@@ -39,14 +38,10 @@ const Chart: React.FC = () => {
             : filter === "1D"
             ? formatFor1D(result)
             : result;
-        console.log(result);
         const formattedData = formatStockData(
           latestDates,
           mapFilterToInterval(filter) as ChartKey
         );
-
-        console.log("latestDates", latestDates);
-        console.log("formated", formattedData);
 
         setData(formattedData);
       } catch (error) {

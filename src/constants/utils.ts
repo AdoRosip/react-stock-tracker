@@ -182,3 +182,7 @@ export const formatStockData = (
     }))
     .reverse(); // Reverse order for chronological display
 };
+
+export const formatPercentage = (num: number) => {
+  return `${Number(num).toFixed(2)}%`;
+};

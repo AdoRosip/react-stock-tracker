@@ -1,6 +1,6 @@
 const basePath = "https://finnhub.io/api/v1";
 const alphaBasePath = "https://www.alphavantage.co/query";
-// const twelveDataPrefix = "https://api.twelvedata.com";
+const twelveDataPrefix = "https://api.twelvedata.com";
 export const getAllStocks = async () => {
   const url = `${basePath}/stock/symbol?exchange=US&mic=XNYS&securityType=Common%20Stock&token=${
     import.meta.env.VITE_FINNHUB
@@ -53,7 +53,6 @@ export const fetchHistoricalData = async (
 
   const response = await fetch(url);
   const jsonResponse = await response.json();
-  console.log(jsonResponse);
   if (!response.ok) {
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
@@ -87,4 +86,20 @@ export const getNews = async () => {
     throw new Error(message);
   }
   return await response.json();
+};
+
+export const batchRequestForIndexes = async () => {
+  const url = `${twelveDataPrefix}/quote?symbol=SPY,DIA,QQQ&interval=1min&apikey=${
+    import.meta.env.VITE_TWELVE_DATA_API_KEY
+  }`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.status}`;
+    throw new Error(message);
+  }
+
+  const final = await response.json();
+  return final;
 };

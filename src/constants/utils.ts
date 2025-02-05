@@ -159,9 +159,38 @@ export const formatFor1D = (data: timeseriesApiResponseType) => {
       datetime: item.datetime, // X-Axis (Date)
       high: Math.round(parseFloat(item.high)),
       low: Math.round(parseFloat(item.low)),
-      close: Math.round(parseFloat(item.close)), // Y-Axis (Closing price)
+      close: parseFloat(item.close), // Y-Axis (Closing price)
     }));
 };
+
+export const formatFor1W = (data: timeseriesApiResponseType) => {
+  if (!data || !data.values) {
+    console.error("Invalid API response", data);
+    return [];
+  }
+
+  return data.values.slice(0, 15).map((item: timeseriesValueType) => ({
+    datetime: item.datetime, // X-Axis (Date)
+    high: Math.round(parseFloat(item.high)),
+    low: Math.round(parseFloat(item.low)),
+    close: parseFloat(item.close), // Y-Axis (Closing price)
+  }));
+};
+
+export const formatFor1M = (data: timeseriesApiResponseType) => {
+  if (!data || !data.values) {
+    console.error("Invalid API response", data);
+    return [];
+  }
+
+  return data.values.slice(0, 12).map((item: timeseriesValueType) => ({
+    datetime: item.datetime, // X-Axis (Date)
+    high: Math.round(parseFloat(item.high)),
+    low: Math.round(parseFloat(item.low)),
+    close: parseFloat(item.close), // Y-Axis (Closing price)
+  }));
+};
+
 export const formatStockData = (
   apiResponse: timeseriesValueType[],
   interval: ChartKey

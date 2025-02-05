@@ -16,6 +16,8 @@ import {
   formatStockData,
   formatFor1H,
   formatFor1D,
+  formatFor1W,
+  formatFor1M,
 } from "../constants/utils";
 import { ChartKey, formattedTimeseriesValueType } from "../constants/contracts";
 
@@ -37,6 +39,10 @@ const Chart: React.FC = () => {
             ? formatFor1H(result)
             : filter === "1D"
             ? formatFor1D(result)
+            : filter === "1W"
+            ? formatFor1W(result)
+            : filter === "1M"
+            ? formatFor1M(result)
             : result;
         const formattedData = formatStockData(
           latestDates,

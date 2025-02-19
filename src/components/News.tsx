@@ -1,28 +1,30 @@
-import { getNews } from "../api/api"
-import { useParams } from "react-router-dom"
-import { timeAgo } from "../constants/utils"
-import { useState, useEffect } from "react"
+import { getNews } from "../api/api";
+import { useParams } from "react-router-dom";
+import { timeAgo } from "../constants/utils";
+import { useState, useEffect } from "react";
 
 interface newsI {
-  id: number
-  source: string
-  headline: string
-  datetime: number
-  url: string
+  id: number;
+  source: string;
+  headline: string;
+  datetime: number;
+  url: string;
 }
 
 const News = () => {
-  const { id } = useParams()
-  const [newsList, setNewsList] = useState<newsI[]>([])
+  const { id } = useParams();
+  const [newsList, setNewsList] = useState<newsI[]>([]);
 
   useEffect(() => {
     const fetchNews = async () => {
-      const response = await getNews()
-      setNewsList(response.slice(0, 3))
-    }
+      const response = await getNews();
+      setNewsList(response.slice(0, 3));
+    };
 
-    fetchNews()
-  }, [id])
+    fetchNews();
+
+    console.log(newsList);
+  }, [id]);
   return (
     <div className="news-container">
       <div className="py-6 px-5">
@@ -46,7 +48,7 @@ const News = () => {
           : "Something Went Wrong"}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default News
+export default News;

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getQuote } from "../api/api";
+// import { getQuote } from "../api/api";
 
 interface quoteI {
   c: number;
@@ -25,12 +25,23 @@ const Ticker = () => {
     );
 
     socket.onopen = () => {
-      console.log("WebSocket Connected");
-      socket.send(JSON.stringify({ type: "subscribe", symbol: "AAPL" }));
+      console.log("WebSocket connected");
+      socket.send(
+        JSON.stringify({ type: "subscribe", symbol: "BINANCE:BTCUSDT" })
+      );
     };
 
     socket.onmessage = (event) => {
-      setQuote(JSON.parse(event.data)); // Ensure proper parsing
+      const response = JSON.parse(event.data);
+
+      if (response.type === "ping") return; // Ignore pings
+
+      console.log("Trade Data Received:", response);
+
+      if (response.type === "trade" && response.data?.length > 0) {
+        const latestTrade = response.data[0]; // Get the first trade
+        setQuote(latestTrade); // Update state with latest trade
+      }
     };
 
     socket.onerror = (error) => {
@@ -38,17 +49,27 @@ const Ticker = () => {
     };
 
     socket.onclose = () => {
-      console.log("WebSocket Disconnected");
+      console.log("WebSocket disconnected");
     };
 
     return () => {
-      socket.close(); // Cleanup WebSocket on component unmount or id change
+      if (socket.readyState === 1) {
+        // Ensure socket is open before sending
+        socket.send(
+          JSON.stringify({ type: "unsubscribe", symbol: "BINANCE:BTCUSDT" })
+        );
+      }
+      socket.close();
     };
   }, [id]); // Re-run when `id` changes
 
+  useEffect(() => {
+    console.log("Updated Quote:", quote);
+  }, [quote]); // ✅ Logs whenever `quote` updates
+
   return (
     <div className="flex flex items-center">
-      <span className="text-primary-text text-4xl">${quote?.c}</span>
+      <span className="text-primary-text text-4xl">${quote?.p}</span>
       <div className="flex gap-[5px] text-sm self-end mb-[10px]">
         <span
           className={`${

@@ -1,27 +1,62 @@
-# React + TypeScript + Vite
+# React Stock Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+React Stock Tracker is a stock market tracking application built with React and Vite. It allows users to search for stocks and view detailed stock data, including price trends, key stock information, and historical performance across different time intervals.
 
-Currently, two official plugins are available:
+## Features
+- **Stock Search:** A search bar on the homepage to look up stock symbols.
+- **Detailed Stock View:** Displays real-time stock information, including:
+  - Stock price
+  - Key details (e.g., open price, close price, market cap, volume)
+  - Graph with multiple time intervals (e.g., 1 day, 1 week, 1 month, and 1 year)
+  - Other relevant financial data
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- **React** – Front-end framework
+- **Vite** – Fast build tool
+- **React Router** – For handling navigation
+- **Chart.js / Recharts (if applicable)** – For stock price visualization
+- **REST API / WebSocket (if applicable)** – For fetching real-time stock data
 
-## Expanding the ESLint configuration
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/react-stock-tracker.git
+   cd react-stock-tracker
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Usage
+1. **Search for a Stock**: Enter a stock symbol in the search bar on the homepage.
+2. **View Stock Details**: Click on a result to navigate to the detailed stock page.
+3. **Analyze Trends**: View historical stock data through interactive graphs with different time intervals.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Deployment
+To build and deploy the application:
+```bash
+npm run build
 ```
+Then, host the `dist/` folder on a static site hosting service (e.g., GitHub Pages, Vercel, Netlify).
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Future Developments
+
+- Using WebSockets for real-time price updates
+- Displaying more financial information, potentially including financial statements for the last quarters
+- Enhancing data visualization with additional technical indicators
+
+## License
+This project is licensed under the MIT License.
+
+## Contributing
+Contributions are welcome! Feel free to submit a pull request or open an issue.
+
+## Author
+Adrian Rosipal
+
